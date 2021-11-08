@@ -34,6 +34,9 @@ Branch and clone fitness tracker to your machine.
 Install node dependencies in terminal and run seeds file
 Start server
 
-## Link to deployed project
+## Project milestones
+Digging through starter code to assess what additional code is needed to get the workouts and stats working
+Adding exports, mongoose, express and routers to api and server
+Testing charts
+Set up mongo atlas
 
-## DEMO images

@@ -1,29 +1,20 @@
-function calculateTotalWeight(data) {
-    const totals = [];
-  
-    data.forEach((workout) => {
-      const workoutTotal = workout.exercises.reduce((total, { type, weight }) => {
-        if (type === 'resistance') {
-          return total + weight;
-        }
-        return total;
-      }, 0);
-  
-      totals.push(workoutTotal);
-    });
-  
-    return totals;
-  }
-  
-  function populateChart(data) {
-    const durations = data.map(({ totalDuration }) => totalDuration);
-    const pounds = calculateTotalWeight(data);
-  
-    const line = document.querySelector('#canvas').getContext('2d');
-    const bar = document.querySelector('#canvas2').getContext('2d');
-  
-    const labels = data.map(({ day }) => {
-      const date = new Date(day);
+
+fetch("/api/workouts/range")
+  .then(response => {
+    return response.json();
+  })
+  .then(data => {
+    populateChart(data);
+  });
+
+
+function populateChart(data) {
+    let durations = data.map(({ totalDuration }) => totalDuration);
+    let pounds = calculateTotalWeight(data);
+    let line = document.querySelector('#canvas').getContext('2d');
+    let bar = document.querySelector('#canvas2').getContext('2d');
+    let labels = data.map(({ day }) => {
+    let date = new Date(day);
   
       // Use JavaScript's `Intl` object to help format dates
       return new Intl.DateTimeFormat('en-US', {
@@ -56,7 +47,7 @@ function calculateTotalWeight(data) {
         scales: {
           y: {
             beginAtZero: true,
-          },
+            },
         },
       },
     });
@@ -106,6 +97,36 @@ function calculateTotalWeight(data) {
       },
     });
   }
+
+  function calculateTotalWeight(data) {
+    const totals = [];
   
+    data.forEach((workout) => {
+      const workoutTotal = workout.exercises.reduce((total, { type, weight }) => {
+        if (type === 'resistance') {
+          return total + weight;
+        }
+        return total;
+      }, 0);
+  
+      totals.push(workoutTotal);
+    });
+  
+    return totals;
+  }
+
+  function workoutTitle(data) {
+    let workouts = [];
+  
+    data.forEach((workout) => {
+      workout.exercises.forEach((exercise) => {
+        if (!workouts.includes(exercise.type)) {
+          workouts.push(exercise.type);
+        }
+      });
+    });
+  
+    return [...new Set(workouts)];
+  }
   // get all workout data from back-end
   API.getWorkoutsInRange().then(populateChart);
