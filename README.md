@@ -31,12 +31,13 @@ the user should be able to:
 
 ### How to run the app
 Branch and clone fitness tracker to your machine.
-Install node dependencies in terminal and run seeds file
+Install node dependencies in terminal
 Start server
 
 ## Project milestones
 Digging through starter code to assess what additional code is needed to get the workouts and stats working
 Adding exports, mongoose, express and routers to api and server
-Testing charts
-Set up mongo atlas
+Testing charts, ran into and error in the CLI
+Troubleshot and found usercreate index and usefindandmodify on my mongoose server connection threw parse errors. I removed them and the server started running properly.
+Need to fix my get at put requests, they are appearing as undefined 
 

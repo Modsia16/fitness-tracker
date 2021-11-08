@@ -1,20 +1,21 @@
 const path = require("path");
-const app = require('express').Router();
+const express = require("express");
+const router = express.Router();
 
-//module.exports = function(app) {
+//module.exports = function(router) {
   // HTML GET Requests
-    app.get("/", (req, res) => {
+    router.get("/", (req, res) => {
       res.sendFile(path.join(__dirname, "../public/index.html"));
     });
     
-    app.get("/exercise", function(req, res) {
+    router.get("/exercise", function(req, res) {
       res.sendFile(path.join(__dirname, "../public/exercise.html"));
     });
   
-    app.get("/stats", function(req, res) {
+    router.get("/stats", function(req, res) {
       res.sendFile(path.join(__dirname, "../public/stats.html"));
     });
   
-  // If no matching route is found default to home};
+  // If no matching route is found default to home;
 
-  module.exports = app;
+  module.exports = router;

@@ -99,34 +99,27 @@ function populateChart(data) {
   }
 
   function calculateTotalWeight(data) {
-    const totals = [];
+    let totals = [];
   
-    data.forEach((workout) => {
-      const workoutTotal = workout.exercises.reduce((total, { type, weight }) => {
-        if (type === 'resistance') {
-          return total + weight;
-        }
-        return total;
-      }, 0);
-  
-      totals.push(workoutTotal);
+    data.forEach(workout => {
+      workout.exercises.forEach(exercise => {
+      totals.push(exercise.weight);
+    });
     });
   
     return totals;
   }
 
-  function workoutTitle(data) {
+  function durations(data) {
     let workouts = [];
   
     data.forEach((workout) => {
       workout.exercises.forEach((exercise) => {
         if (!workouts.includes(exercise.type)) {
-          workouts.push(exercise.type);
+          durations.push(durations);
         }
       });
     });
   
-    return [...new Set(workouts)];
+    return durations;
   }
-  // get all workout data from back-end
-  API.getWorkoutsInRange().then(populateChart);
