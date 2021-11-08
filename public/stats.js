@@ -9,7 +9,7 @@ fetch("/api/workouts/range")
 
 
 function populateChart(data) {
-    let durations = data.map(({ totalDuration }) => totalDuration);
+    let durations = duration(data);
     let pounds = calculateTotalWeight(data);
     let line = document.querySelector('#canvas').getContext('2d');
     let bar = document.querySelector('#canvas2').getContext('2d');
@@ -45,9 +45,22 @@ function populateChart(data) {
           text: 'Time Spent Working Out (Last 7 days)',
         },
         scales: {
+          xAxes: [
+            {
+              display: true,
+              scaleLabel: {
+                display: true,
+                labelString: 'Date',
+              },
+            },
+          ],
           y: {
             beginAtZero: true,
+            scaleLabel: {
+              display: true,
+              labelString: 'Minutes',
             },
+          },
         },
       },
     });
@@ -110,14 +123,12 @@ function populateChart(data) {
     return totals;
   }
 
-  function durations(data) {
-    let workouts = [];
+  function duration(data) {
+    let durations = [];
   
-    data.forEach((workout) => {
-      workout.exercises.forEach((exercise) => {
-        if (!workouts.includes(exercise.type)) {
-          durations.push(durations);
-        }
+    data.forEach(workout => {
+      workout.exercises.forEach(exercise => {
+          durations.push(exercise.durations);
       });
     });
   

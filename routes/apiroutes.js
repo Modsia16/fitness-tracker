@@ -3,13 +3,13 @@ const express = require('express');
 const router = express.Router();
 
   // Get all workouts
-  router.get('/api/workouts', (req, res) => {
-      db.Workout.find({}).then(dbWorkout => {
-          res.json(dbWorkout); })
-        .catch(err => {
-        res.json(err);
-      });
-    });
+  router.get("/api/workouts", (req, res) => {
+    db.Workout.find({})
+      .then(dbWorkout =>  
+      { res.json(dbWorkout); })
+      .catch(err => 
+      { res.json(err); });
+  });
     
   //range information
   router.get('/api/workouts/range', (req, res) => {
@@ -28,10 +28,11 @@ const router = express.Router();
     }) .catch(err => {
        res.json(err)
     })
-    });
+});
 
     //update workouts
     router.put('/api/workouts/:id', (req, res) => {
+      console.log(req.body)
         db.Workout.findByIdAndUpdate(
             req.params.id,
             { $push: {exercises: req.body}},

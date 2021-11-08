@@ -16,6 +16,5 @@ const router = express.Router();
       res.sendFile(path.join(__dirname, "../public/stats.html"));
     });
   
-  // If no matching route is found default to home;
 
   module.exports = router;
