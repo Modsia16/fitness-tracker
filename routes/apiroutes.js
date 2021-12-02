@@ -1,8 +1,9 @@
-const router = require("express").Router();
-const db = require("../models/");
+const db = require("../models");
+
+module.exports = function (app) {
 
 // Get workouts
-router.get("/workouts", (req, res) => {
+app.get("/api/workouts", (req, res) => {
   console.log(Date.now());
   db.Workout.find({})
     .then((dbWorkout) => {
@@ -14,7 +15,7 @@ router.get("/workouts", (req, res) => {
 });
     
 //range information
-router.get("/workouts/range", (req, res) => {
+app.get("/api/workouts/range", (req, res) => {
   db.Workout.find({})
     .limit(7)
     .then((dbWorkout) => {
@@ -26,28 +27,37 @@ router.get("/workouts/range", (req, res) => {
 });
 
 //post new workout
-router.put("/workouts/:id", (req, res) => {
-  db.Workout.findByIdAndUpdate(
-    { _id: req.params.id },
-    { $push: { exercises: [req.body] }, $inc: {totalDuration: req.body.duration} }
-  )
+router.put("/api/workouts/:id", ({body, params}, res) => {
+  const workoutId = params.id;
+  let savedWorkout = [];
+  db.Workout.find({_id: workoutId})
     .then((dbWorkout) => {
-      res.json(dbWorkout);
+      savedWorkout = dbWorkout[0].exercises;
+      res.json(dbWorkout)[0].exercises;
+      let allWorkouts = [...savedWorkout, body];
+      console.log(allWorkouts);
+      updateWorkout(allWorkouts);
     })
     .catch((err) => {
       res.status(500).json(err);
     });
+function updateWorkout(exercises) {
+  db.Workout.findByIdAndUpdate(workoutId, {exercises: exercises}, function(err, doc) {
+    if (err) {
+      console.log("Something wrong when updating data!");
+    }
+  });
+}
 });
 
 //update workouts
-    router.post('/workouts/', (req, res) => {
-      db.Workout.create({})
-        .then(dbWorkout => {
-          res.json(dbWorkout);
-        })
-        .catch(err => {
-          res.status(500).json(err);
-        });
-});
+    router.post('/api/workouts', async (req, res) => {
+      try {
+      const response = await db.Workout.create({ type: 'workout' });
+      res.json(response);
+      } catch (err) {
+      res.json(err);
+      }
+    });
+};
 
-module.exports = router;
