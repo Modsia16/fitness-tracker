@@ -42,15 +42,14 @@ router.put("/workouts/:id", (req, res) => {
 });
 
 //update workouts
-router.post("/workouts/", (req, res) => {
-  db.Workout.create({})
-    .then((dbWorkout) => {
-      res.json(dbWorkout);
-    })
-    .catch((err) => {
-      res.status(500).json(err);
-    });
+    router.post('/workouts/', (req, res) => {
+      db.Workout.create({})
+        .then(dbWorkout => {
+          res.json(dbWorkout);
+        })
+        .catch(err => {
+          res.status(500).json(err);
+        });
 });
-
 
 module.exports = router;
