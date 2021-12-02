@@ -1,15 +1,22 @@
+function calculateTotalWeight(data) {
+  const totals = [];
 
-fetch("/api/workouts/range")
-  .then(response => {
-    return response.json();
-  })
-  .then(data => {
-    populateChart(data);
+  data.forEach((workout) => {
+    const workoutTotal = workout.exercises.reduce((total, { type, weight }) => {
+      if (type === 'resistance') {
+        return total + weight;
+      }
+      return total;
+    }, 0);
+
+    totals.push(workoutTotal);
   });
 
+  return totals;
+}
 
 function populateChart(data) {
-    let durations = duration(data);
+    let durations = data.map(({ totalDuration }) => totalDuration);
     let pounds = calculateTotalWeight(data);
     let line = document.querySelector('#canvas').getContext('2d');
     let bar = document.querySelector('#canvas2').getContext('2d');
@@ -45,21 +52,8 @@ function populateChart(data) {
           text: 'Time Spent Working Out (Last 7 days)',
         },
         scales: {
-          xAxes: [
-            {
-              display: true,
-              scaleLabel: {
-                display: true,
-                labelString: 'Date',
-              },
-            },
-          ],
           y: {
             beginAtZero: true,
-            scaleLabel: {
-              display: true,
-              labelString: 'Minutes',
-            },
           },
         },
       },
@@ -111,26 +105,5 @@ function populateChart(data) {
     });
   }
 
-  function calculateTotalWeight(data) {
-    let totals = [];
-  
-    data.forEach(workout => {
-      workout.exercises.forEach(exercise => {
-      totals.push(exercise.weight);
-    });
-    });
-  
-    return totals;
-  }
-
-  function duration(data) {
-    let durations = [];
-  
-    data.forEach(workout => {
-      workout.exercises.forEach(exercise => {
-          durations.push(exercise.durations);
-      });
-    });
-  
-    return durations;
-  }
+//get all workout data from back-end
+API.getWorkoutsInRange().then(populateChart);

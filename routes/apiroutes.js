@@ -1,45 +1,54 @@
-const db = require('../models');
-const express = require('express');
-const router = express.Router();
+const router = require("express").Router();
+const db = require("../models");
+const mongoose = require("mongoose");
 
-  // Get all workouts
-  router.get("/api/workouts", (req, res) => {
-    db.Workout.find({})
-      .then(dbWorkout =>  
-      { res.json(dbWorkout); })
-      .catch(err => 
-      { res.json(err); });
-  });
-    
-  //range information
-  router.get('/api/workouts/range', (req, res) => {
 
-    db.Workout.find({}).then(dbWorkout => {
+// Get workouts
+router.get("/workouts", (req, res) => {
+  console.log(Date.now());
+  db.Workout.find({})
+    .then((dbWorkout) => {
       res.json(dbWorkout);
-    }) .catch(err => {
-      res.json(err);
-    });
-  })
-
-  //post new workout
-  router.post('/api/workouts', ({ body }, res) => {
-    db.Workout.create(body).then(dbWorkout => {
-      res.json(dbWorkout);
-    }) .catch(err => {
-       res.json(err)
     })
+    .catch((err) => {
+      res.status(500).json(err);
+    });
+});
+    
+//range information
+router.get("/workouts/range", (req, res) => {
+  db.Workout.find({})
+    .limit(7)
+    .then((dbWorkout) => {
+      res.json(dbWorkout);
+    })
+    .catch((err) => {
+      res.status(500).json(err);
+    });
 });
 
-    //update workouts
-    router.put('/api/workouts/:id', (req, res) => {
-      console.log(req.body)
-        db.Workout.findByIdAndUpdate(
-            req.params.id,
-            { $push: {exercises: req.body}},
-           { new: true }).then(dbWorkout => {
-            res.json(dbWorkout);
-        }).catch(err => {
-            res.json(err);
+//post new workout
+router.put("/workouts/:id", (req, res) => {
+  db.Workout.findByIdAndUpdate(
+    { _id: req.params.id },
+    { $push: { exercises: [req.body] }, $inc: {totalDuration: req.body.duration} }
+  )
+    .then((dbWorkout) => {
+      res.json(dbWorkout);
+    })
+    .catch((err) => {
+      res.status(500).json(err);
+    });
+});
+
+//update workouts
+router.post("/workouts/", (req, res) => {
+  db.Workout.create({})
+    .then((dbWorkout) => {
+      res.json(dbWorkout);
+    })
+    .catch((err) => {
+      res.status(500).json(err);
     });
 });
 

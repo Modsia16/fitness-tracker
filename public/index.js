@@ -2,6 +2,7 @@ init();
 
 async function init() {
     if (location.search.split("=") [1] === undefined) {
+        //AudioParam for changing values
         const workout = await AudioParam.getLastWorkout();
         if (workout) {
             location.search = "?id" + workout.id;

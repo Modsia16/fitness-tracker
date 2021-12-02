@@ -39,5 +39,6 @@ Digging through starter code to assess what additional code is needed to get the
 Adding exports, mongoose, express and routers to api and server
 Testing charts, ran into and error in the CLI
 Troubleshot and found usercreate index and usefindandmodify on my mongoose server connection threw parse errors. I removed them and the server started running properly.
-Need to fix my get at put requests, they are appearing as undefined 
+Need to fix my get at put requests, they are appearing as undefined, working with a TA for the 304 on GET and POST.
+
 
