@@ -13,11 +13,10 @@ app.use(express.json());
 
 app.use(express.static("public"));
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/Workout", 
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", 
 { useNewUrlParser: true,
 useUnifiedTopology: false }).then(res => res.connection.getClient());
 
-const db = require("./models");
 
 require("./routes/apiroutes")(app);
 require("./routes/htmlroutes")(app);

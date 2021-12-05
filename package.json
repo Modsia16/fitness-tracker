@@ -21,11 +21,8 @@
   },
   "homepage": "https://github.com/Modsia16/fitness-tracker#readme",
   "dependencies": {
-    "dotenv": "^10.0.0",
     "express": "^4.17.1",
-    "gitignore": "^0.7.0",
     "mongoose": "^6.0.12",
-    "morgan": "^1.10.0",
-    "nodemon": "^2.0.14"
+    "morgan": "^1.10.0"
   }
 }
