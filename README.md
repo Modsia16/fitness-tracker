@@ -58,6 +58,9 @@ Need to fix my get at put requests, they are appearing as undefined, working wit
 
   ![demo](./assets/images/Untitled-t.png)
 
+  ![github]https://github.com/Modsia16/fitness-tracker
+
+
   ## Contributing 
 
   Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
