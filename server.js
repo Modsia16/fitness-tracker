@@ -10,16 +10,16 @@ app.use(logger("dev"));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
 app.use(express.static("public"));
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", 
-{ useNewUrlParser: true,
-useUnifiedTopology: false }).then(res => res.connection.getClient());
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+}).then (res => res.connection.getClient());
 
-
-require("./routes/apiroutes")(app);
+//require(apiRoute)(app);
 require("./routes/htmlroutes")(app);
+require("./routes/apiroutes")(app);
 
 app.listen(PORT, () => {
   console.log(`App running on port ${PORT}!`);
