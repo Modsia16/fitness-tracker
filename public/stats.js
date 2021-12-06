@@ -111,4 +111,3 @@ function populateChart(data) {
 API.getWorkoutsInRange().then(populateChart);
   
   
-  
