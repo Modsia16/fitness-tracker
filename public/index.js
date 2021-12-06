@@ -5,7 +5,7 @@ async function init() {
         //AudioParam for changing values
         const workout = await API.getLastWorkout();
         if (workout) {
-            location.search = "?id" + workout.id;
+            location.search = "?id" + workout._id;
         } else {
             document.querySelector("#continue-button").classList.add("d-none");
         }
