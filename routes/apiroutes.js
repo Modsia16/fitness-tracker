@@ -1,7 +1,6 @@
-
+const app = require("express").Router();
 const db = require("../models");
 
-module.exports = function(app) {
   app.get("/api/workouts", (req, res) => {
     db.Workout.find({}).then(dbWorkout => {
       res.json(dbWorkout);
@@ -36,4 +35,5 @@ module.exports = function(app) {
         res.status(400).json(err);
       });
     });
-  };
+  
+  module.exports = app;
